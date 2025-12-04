@@ -10,9 +10,18 @@ const formatCurrency = (value: number) => {
 };
 
 const Balance = () => {
-  const { transactions } = useContext(GlobalContext);
+  const { transactions, currentMonth, currentYear } = useContext(GlobalContext);
 
-  const amounts = transactions.map(transaction => transaction.amount);
+  // Filtrar transações pelo mês e ano atual
+  const filteredTransactions = transactions.filter((transaction) => {
+    const transactionDate = new Date(transaction.date);
+    return (
+      transactionDate.getMonth() === currentMonth &&
+      transactionDate.getFullYear() === currentYear
+    );
+  });
+
+  const amounts = filteredTransactions.map(transaction => transaction.amount);
 
   const income = amounts
     .filter(item => item > 0)

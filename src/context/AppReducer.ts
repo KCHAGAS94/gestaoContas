@@ -24,6 +24,16 @@ export default (state: State, action: Action): State => {
             : transaction
         ),
       };
+    case 'SET_CURRENT_MONTH':
+      return {
+        ...state,
+        currentMonth: action.payload,
+      };
+    case 'SET_CURRENT_YEAR':
+      return {
+        ...state,
+        currentYear: action.payload,
+      };
     default:
       return state;
   }

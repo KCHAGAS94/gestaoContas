@@ -2,6 +2,7 @@ import Header from './components/Header';
 import Balance from './components/Balance';
 import TransactionList from './components/TransactionList';
 import AddTransaction from './components/AddTransaction';
+import MonthSelector from './components/MonthSelector'; // Import MonthSelector
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <div className="max-w-5xl mx-auto">
         <Header />
         <main>
+          <MonthSelector /> {/* Render MonthSelector */}
           <Balance />
           <TransactionList />
           <AddTransaction />

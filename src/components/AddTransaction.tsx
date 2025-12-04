@@ -8,7 +8,7 @@ const AddTransaction = () => {
   const [amount, setAmount] = useState(0);
   const [date, setDate] = useState(getTodayDate());
 
-  const { addTransaction } = useContext(GlobalContext);
+  const { addTransaction, setCurrentMonth, setCurrentYear } = useContext(GlobalContext);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +27,11 @@ const AddTransaction = () => {
     };
 
     addTransaction(newTransaction);
+
+    // Atualizar o mês e o ano atual para o da nova transação
+    const newTransactionDate = new Date(date);
+    setCurrentMonth(newTransactionDate.getMonth());
+    setCurrentYear(newTransactionDate.getFullYear());
 
     // Limpar campos
     setText('');

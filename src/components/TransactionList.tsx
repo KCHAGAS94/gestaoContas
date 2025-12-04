@@ -4,10 +4,19 @@ import TransactionItem from './TransactionItem';
 import { Transaction } from '../types';
 
 const TransactionList = () => {
-  const { transactions } = useContext(GlobalContext);
+  const { transactions, currentMonth, currentYear } = useContext(GlobalContext);
+
+  // Filtrar transações pelo mês e ano atual
+  const filteredTransactions = transactions.filter((transaction) => {
+    const transactionDate = new Date(transaction.date);
+    return (
+      transactionDate.getMonth() === currentMonth &&
+      transactionDate.getFullYear() === currentYear
+    );
+  });
 
   // Função de ordenação
-  const sortedTransactions = [...transactions].sort((a: Transaction, b: Transaction) => {
+  const sortedTransactions = [...filteredTransactions].sort((a: Transaction, b: Transaction) => {
     // Prioridade 1: "paid: false" (não pagas) vêm antes de "paid: true" (pagas)
     if (a.paid && !b.paid) {
       return 1; // a (paga) vai depois de b (não paga)
@@ -32,10 +41,11 @@ const TransactionList = () => {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-500 text-center mt-4">Nenhuma transação adicionada ainda.</p>
+        <p className="text-gray-500 text-center mt-4">Nenhuma transação adicionada ainda para este mês.</p>
       )}
     </section>
   );
 };
 
 export default TransactionList;
+
