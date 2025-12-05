@@ -33,8 +33,11 @@ const LoginPage: React.FC = () => {
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-8">
       <h1 className="text-4xl font-bold text-white mb-12 text-center">
-        Escolha o plano ideal para você
+        Gestão de Contas
       </h1>
+      <p className="text-lg text-white text-center mb-8 max-w-md">
+        Assuma o controle. Gerencie sua conta agora e simplifique seu acesso.
+      </p>
       <div className="bg-gray-800 text-white p-8 rounded-lg shadow-lg w-full max-w-sm flex flex-col border-2 border-cyan-400">
         {isLoginView ? (
           <form onSubmit={handleLogin}>
@@ -43,15 +46,15 @@ const LoginPage: React.FC = () => {
               type="email"
               placeholder="Email"
               value={loginEmail}
-              onChange={(e) => setLoginEmail(e.target.value)}
-              className="bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              onChange={(e) => setLoginEmail(e.target.value.toLowerCase())}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
             />
             <input
               type="password"
               placeholder="Senha"
               value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-              className="bg-gray-700 text-white px-4 py-3 mb-6 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              onChange={(e) => setLoginPassword(e.target.value.toLowerCase())}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-6 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
             />
             <button type="submit" className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
               Logar
@@ -74,28 +77,28 @@ const LoginPage: React.FC = () => {
               placeholder="Nome"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
             <input
               type="email"
               placeholder="Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              onChange={(e) => setEmail(e.target.value.toLowerCase())}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
             />
             <input
               type="password"
               placeholder="Senha"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              onChange={(e) => setPassword(e.target.value.toLowerCase())}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
             />
             <input
               type="password"
               placeholder="Confirmar Senha"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="bg-gray-700 text-white px-4 py-3 mb-6 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              onChange={(e) => setConfirmPassword(e.target.value.toLowerCase())}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-6 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
             />
             {error && <p className="text-red-500 text-xs mb-4">{error}</p>}
             <button
@@ -115,28 +118,7 @@ const LoginPage: React.FC = () => {
           </>
         )}
       </div>
-      <div className="flex flex-col lg:flex-row gap-8 mt-12">
-        <PricingCard
-          title="Mensal"
-          price="R$ 6,90"
-          duration="por mês"
-          monthlyEffectivePrice="R$ 6,90/mês"
-        />
-        <PricingCard
-          title="Semestral"
-          price="R$ 29,90"
-          duration="pagamento único"
-          monthlyEffectivePrice="Equivale a R$ 4,98/mês"
-          isRecommended={false}
-        />
-        <PricingCard
-          title="Anual"
-          price="R$ 49,90"
-          duration="pagamento único"
-          monthlyEffectivePrice="Equivale a R$ 4,16/mês"
-          isRecommended={true}
-        />
-      </div>
+      
       <footer className="text-gray-500 mt-12">
         todos direitos reservados gestão de contas
       </footer>

@@ -6,6 +6,7 @@ interface PricingCardProps {
   duration: string;
   monthlyEffectivePrice: string;
   isRecommended?: boolean;
+  hidePricingDetails?: boolean;
 }
 
 const PricingCard: React.FC<PricingCardProps> = ({
@@ -14,6 +15,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
   duration,
   monthlyEffectivePrice,
   isRecommended = false,
+  hidePricingDetails = false,
 }) => {
   const cardClasses = `bg-gray-800 text-white p-8 rounded-lg shadow-lg w-full max-w-sm flex flex-col ${
     isRecommended ? 'border-2 border-cyan-400' : 'border-2 border-gray-700'
@@ -27,15 +29,17 @@ const PricingCard: React.FC<PricingCardProps> = ({
         </span>
       )}
       <h3 className="text-2xl font-bold text-center">{title}</h3>
-      <div className="my-6 text-center">
-        <span className="text-3xl font-extrabold">{price}</span>
-        <span className="text-gray-400 block">{duration}</span>
-      </div>
-      <p className="text-center text-cyan-400 font-semibold mb-6">{monthlyEffectivePrice}</p>
+      {!hidePricingDetails && (
+        <div className="my-6 text-center">
+          <span className="text-3xl font-extrabold">{price}</span>
+          <span className="text-gray-400 block">{duration}</span>
+        </div>
+      )}
+      {!hidePricingDetails && (
+        <p className="text-center text-cyan-400 font-semibold mb-6">{monthlyEffectivePrice}</p>
+      )}
       
-      <button className="w-full mt-auto bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
-        Assinar Agora
-      </button>
+      
     </div>
   );
 };
