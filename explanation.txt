@@ -1,0 +1,5 @@
+Para que o site funcione diretamente em `gestaotarefas.kend.shop` sem o `/disc/`, você precisa garantir que os arquivos gerados após o comando `npm run build` (que estão dentro da sua pasta `dist`) sejam carregados diretamente na **raiz** do domínio `gestaotarefas.kend.shop` no seu ambiente de hospedagem (cPanel ou similar).
+
+Atualmente, parece que você carregou a pasta `dist` inteira para dentro da raiz do domínio, criando assim uma URL como `gestaotarefas.kend.shop/disc/`.
+
+Você deve copiar o *conteúdo* da pasta `dist` (não a pasta `dist` em si) para o diretório raiz público do seu domínio no servidor.
