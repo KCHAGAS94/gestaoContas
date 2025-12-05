@@ -18,10 +18,7 @@ const getTransactionsFromLocalStorage = (): Transaction[] => {
 // Estado inicial
 const initialState: State = {
   transactions: getTransactionsFromLocalStorage().length > 0 ? getTransactionsFromLocalStorage() : [
-    { id: 1, text: 'Salário', amount: 5000, date: '2025-12-05', paid: true },
-    { id: 2, text: 'Aluguel', amount: -1500, date: '2025-12-10', paid: false },
-    { id: 3, text: 'Conta de Luz', amount: -250, date: '2025-12-15', paid: false },
-    { id: 4, text: 'Freelance', amount: 800, date: '2025-12-01', paid: true },
+    
   ],
   deleteTransaction: () => {},
   addTransaction: () => {},
