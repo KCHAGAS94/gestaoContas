@@ -1,5 +1,4 @@
-// src/context/AppReducer.ts
-import { State, Action } from '../types';
+import { State, Action, User } from '../types';
 
 export default (state: State, action: Action): State => {
   switch (action.type) {
@@ -33,6 +32,20 @@ export default (state: State, action: Action): State => {
       return {
         ...state,
         currentYear: action.payload,
+      };
+    case 'LOGIN_SUCCESS':
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.user,
+        transactions: action.payload.transactions,
+      };
+    case 'LOGOUT':
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+        transactions: [],
       };
     default:
       return state;
