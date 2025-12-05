@@ -1,8 +1,8 @@
 import React from 'react';
-import LandingPage from './components/LandingPage';
+import LoginPage from './pages/LoginPage';
 
 const App: React.FC = () => {
-  return <LandingPage />;
+  return <LoginPage />;
 };
 
 export default App;
