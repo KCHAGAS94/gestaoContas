@@ -29,7 +29,7 @@ const MonthSelector = () => {
         className="p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
       >
         {months.map((month, index) => (
-          <option key={index} value={index}>
+          <option key={index} value={index} className="bg-gray-700 text-white">
             {month}
           </option>
         ))}
@@ -40,7 +40,7 @@ const MonthSelector = () => {
         className="p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
       >
         {years.map((year) => (
-          <option key={year} value={year}>
+          <option key={year} value={year} className="bg-gray-700 text-white">
             {year}
           </option>
         ))}

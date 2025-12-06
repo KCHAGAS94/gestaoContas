@@ -41,35 +41,35 @@ const AddTransaction = () => {
 
   return (
     <section id="add-transaction">
-      <h2 className="text-2xl font-semibold border-b-2 border-cyan-500 pb-2 mb-4">Adicionar Nova Transação</h2>
+      <h2 className="text-2xl font-semibold border-b-2 border-cyan-500 pb-2 mb-4 text-white">Adicionar Nova Transação</h2>
       <form onSubmit={onSubmit} className="bg-gray-800 p-6 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="md:col-span-1">
-          <label htmlFor="text" className="block mb-2 font-semibold">Descrição</label>
+          <label htmlFor="text" className="block mb-2 font-semibold text-white">Descrição</label>
           <input
             type="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Ex: Salário, Aluguel..."
-            className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-cyan-500"
+            className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-cyan-500 text-white"
           />
         </div>
         <div className="md:col-span-1">
-          <label htmlFor="amount" className="block mb-2 font-semibold">Valor</label>
+          <label htmlFor="amount" className="block mb-2 font-semibold text-white">Valor</label>
           <input
             type="number"
             value={amount === 0 ? '' : amount}
             onChange={(e) => setAmount(Number(e.target.value))}
             placeholder="Ex: 500, -250..."
-            className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-cyan-500"
+            className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-cyan-500 text-white"
           />
         </div>
         <div className="md:col-span-1">
-          <label htmlFor="date" className="block mb-2 font-semibold">Data</label>
+          <label htmlFor="date" className="block mb-2 font-semibold text-white">Data</label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-cyan-500"
+            className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-cyan-500 text-white"
           />
         </div>
         <div className="md:col-span-3">

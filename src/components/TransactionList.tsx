@@ -33,7 +33,7 @@ const TransactionList = () => {
 
   return (
     <section id="transactions" className="mb-8">
-      <h2 className="text-2xl font-semibold border-b-2 border-cyan-500 pb-2 mb-4">Histórico</h2>
+      <h2 className="text-2xl font-semibold border-b-2 border-cyan-500 pb-2 mb-4 text-white">Histórico</h2>
       {sortedTransactions.length > 0 ? (
         <ul id="transaction-list" className="space-y-3">
           {sortedTransactions.map((transaction) => (

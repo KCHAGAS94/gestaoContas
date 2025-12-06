@@ -34,19 +34,19 @@ const Balance = () => {
 
   return (
     <section id="balance" className="mb-8">
-      <h2 className="text-2xl font-semibold border-b-2 border-cyan-500 pb-2 mb-4">Resumo</h2>
+      <h2 className="text-2xl font-semibold border-b-2 border-cyan-500 pb-2 mb-4 text-white">Resumo</h2>
       <div className="grid md:grid-cols-3 gap-4 text-center">
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold text-green-400">Receitas</h3>
-          <p className="text-2xl font-mono">{formatCurrency(income)}</p>
+          <p className="text-lg md:text-xl font-mono text-white">{formatCurrency(income)}</p>
         </div>
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold text-red-400">Despesas</h3>
-          <p className="text-2xl font-mono">{formatCurrency(expense)}</p>
+          <p className="text-lg md:text-xl font-mono text-white">{formatCurrency(expense)}</p>
         </div>
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold text-cyan-400">Saldo Total</h3>
-          <p className="text-2xl font-mono">{formatCurrency(total)}</p>
+          <p className="text-lg md:text-xl font-mono text-white">{formatCurrency(total)}</p>
         </div>
       </div>
     </section>

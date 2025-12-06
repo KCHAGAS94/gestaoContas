@@ -1,4 +1,4 @@
-import { State, Action, User } from '../types';
+import { State, Action } from '../types';
 
 export default (state: State, action: Action): State => {
   switch (action.type) {
@@ -39,6 +39,7 @@ export default (state: State, action: Action): State => {
         isAuthenticated: true,
         user: action.payload.user,
         transactions: action.payload.transactions,
+        loading: false, // Stop loading on login success
       };
     case 'LOGOUT':
       return {
@@ -46,6 +47,12 @@ export default (state: State, action: Action): State => {
         isAuthenticated: false,
         user: null,
         transactions: [],
+        loading: false, // Stop loading on logout
+      };
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

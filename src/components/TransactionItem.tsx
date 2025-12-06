@@ -33,7 +33,7 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
         className="form-checkbox h-5 w-5 rounded bg-gray-700 border-gray-600 text-cyan-600 focus:ring-cyan-500 cursor-pointer"
       />
       <div className="flex-grow mx-4">
-        <span className="font-semibold">{transaction.text}</span>
+        <span className="font-semibold text-white">{transaction.text}</span>
         <span className="block text-sm text-gray-400">{formatDate(transaction.date)}</span>
       </div>
       <div className="text-right">

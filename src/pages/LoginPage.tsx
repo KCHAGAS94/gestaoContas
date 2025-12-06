@@ -1,33 +1,77 @@
 import React, { useState, useContext } from 'react';
-import PricingCard from '../components/PricingCard';
 import { GlobalContext } from '../context/GlobalState';
+import { FirebaseError } from 'firebase/app';
+
+// Helper para traduzir erros comuns do Firebase
+const getFirebaseErrorMessage = (error: FirebaseError): string => {
+  switch (error.code) {
+    case 'auth/invalid-email':
+      return 'O formato do e-mail é inválido.';
+    case 'auth/user-not-found':
+      return 'Nenhum usuário encontrado com este e-mail.';
+    case 'auth/wrong-password':
+      return 'Senha incorreta.';
+    case 'auth/email-already-in-use':
+      return 'Este e-mail já está em uso por outra conta.';
+    case 'auth/weak-password':
+      return 'A senha é muito fraca. Use pelo menos 6 caracteres.';
+    case 'auth/operation-not-allowed':
+      return 'Operação não permitida. Contate o suporte.';
+    default:
+      return 'Ocorreu um erro. Tente novamente.';
+  }
+};
+
 
 const LoginPage: React.FC = () => {
-  const { registerUser, loginUser } = useContext(GlobalContext);
+  const { registerUser, loginUser, loading } = useContext(GlobalContext);
 
   const [isLoginView, setIsLoginView] = useState(true);
+  
+  // State for registration form
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-
+  
+  // State for login form
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
 
+  // Shared error state
+  const [error, setError] = useState('');
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    setError(''); // Clear previous errors
     if (password !== confirmPassword) {
-      setError('As senhas não coincidem');
-    } else {
-      setError('');
-      registerUser({ name, email, password });
+      setError('As senhas não coincidem.');
+      return;
+    }
+    try {
+      await registerUser({ name, email, password });
+      // A transição de estado será gerenciada pelo onAuthStateChanged no GlobalState
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        setError(getFirebaseErrorMessage(err));
+      } else {
+        setError('Ocorreu um erro desconhecido.');
+      }
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    loginUser({ email: loginEmail, password: loginPassword });
+    setError(''); // Clear previous errors
+    try {
+      await loginUser({ email: loginEmail, password: loginPassword });
+      // A transição de estado será gerenciada pelo onAuthStateChanged no GlobalState
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        setError(getFirebaseErrorMessage(err));
+      } else {
+        setError('Ocorreu um erro desconhecido.');
+      }
+    }
   }
 
   return (
@@ -42,27 +86,29 @@ const LoginPage: React.FC = () => {
         {isLoginView ? (
           <form onSubmit={handleLogin}>
             <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+            {error && <p className="text-red-500 text-center text-sm mb-4">{error}</p>}
             <input
               type="email"
               placeholder="Email"
               value={loginEmail}
-              onChange={(e) => setLoginEmail(e.target.value.toLowerCase())}
-              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
+              onChange={(e) => setLoginEmail(e.target.value)}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              autoCapitalize="none"
             />
             <input
               type="password"
               placeholder="Senha"
               value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value.toLowerCase())}
-              className="w-full bg-gray-700 text-white px-4 py-3 mb-6 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
+              onChange={(e) => setLoginPassword(e.target.value)}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-6 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
-            <button type="submit" className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
-              Logar
+            <button type="submit" disabled={loading} className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+              {loading ? 'Aguarde...' : 'Logar'}
             </button>
             <div className="text-center mt-4">
               <button
                 type="button"
-                onClick={() => setIsLoginView(false)}
+                onClick={() => { setIsLoginView(false); setError(''); }}
                 className="text-cyan-400 hover:text-cyan-500"
               >
                 Criar Cadastro
@@ -72,6 +118,7 @@ const LoginPage: React.FC = () => {
         ) : (
           <>
             <h2 className="text-2xl font-bold text-center mb-6">Criar Cadastro</h2>
+            {error && <p className="text-red-500 text-center text-sm mb-4">{error}</p>}
             <input
               type="text"
               placeholder="Nome"
@@ -83,36 +130,37 @@ const LoginPage: React.FC = () => {
               type="email"
               placeholder="Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value.toLowerCase())}
-              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              autoCapitalize="none"
             />
             <input
               type="password"
-              placeholder="Senha"
+              placeholder="Senha (mín. 6 caracteres)"
               value={password}
-              onChange={(e) => setPassword(e.target.value.toLowerCase())}
-              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-4 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
             <input
               type="password"
               placeholder="Confirmar Senha"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value.toLowerCase())}
-              className="w-full bg-gray-700 text-white px-4 py-3 mb-6 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400 lowercase"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full bg-gray-700 text-white px-4 py-3 mb-6 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
-            {error && <p className="text-red-500 text-xs mb-4">{error}</p>}
             <button
               onClick={handleRegister}
-              className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105"
+              disabled={loading}
+              className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Criar Conta
+              {loading ? 'Aguarde...' : 'Criar Conta'}
             </button>
             <div className="text-center mt-4">
               <button
-                onClick={() => setIsLoginView(true)}
+                onClick={() => { setIsLoginView(true); setError(''); }}
                 className="text-cyan-400 hover:text-cyan-500"
               >
-                Login
+                Já tenho uma conta (Login)
               </button>
             </div>
           </>
